@@ -29,7 +29,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/gsi_keys.mk)
 $(call inherit-product, vendor/twrp/config/common.mk)
 
 # Inherit from TECNO-LE7n device
-$(call inherit-product, device/tecno/le7n/device.mk)
+$(call inherit-product, device/tecno/TECNO_LE7n/device.mk)
 
 # Device identifier. This must come after all inclusions
 PRODUCT_DEVICE := TECNO_LE7n
