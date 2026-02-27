@@ -12,4 +12,4 @@
         run: |
           cd work
           # Синхронизация с учетом локального манифеста
-          repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --no-tags --optimized-fetch --prune
+          repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune
