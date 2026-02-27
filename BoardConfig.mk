@@ -21,18 +21,19 @@
 DEVICE_PATH := device/tecno/le7n
 
 # Switch off some options for volume reduction
-FOX_VANILLA_BUILD := 1
-FOX_EXCLUDE_ALL_LANGUAGES := 1
-FOX_LANGUAGES := "en;ru"
-FOX_EXCLUDE_THEMES := 1
-FOX_EXCLUDE_MAGISK_MANAGER := 1
-FOX_EXCLUDE_AROMAFM := 1
+FOX_VANILLA_BUILD := 1			# Minimal build
+# FOX_EXCLUDE_ALL_LANGUAGES := 1	# If you want to exclude all languages except English
+FOX_LANGUAGES := "en;ru"		# English and Russian languages in Recovery
+FOX_EXCLUDE_THEMES := 1			# Exclude all interface themes
+FOX_EXCLUDE_MAGISK_MANAGER := 1	# Exclude Magisk Manager
+FOX_EXCLUDE_AROMAFM := 1		# Exclude excess file manager
+FOX_EXCLUDE_NANO := 1           # Вырезаем текстовый редактор
+FOX_EXCLUDE_BASH := 1           # Используем стандартный sh вместо тяжелого bash
 
 # Reduce image size
 BOARD_RAMDISK_COMPRESSION := lz4
 BOARD_RAMDISK_USE_LZ4 := true
 BOARD_RAMDISK_USE_GZIP := false
-FOX_VANILLA_BUILD := 1
 FOX_REMOVE_AAPT := 1
 TW_EXCLUDE_PYTHON := true
 
