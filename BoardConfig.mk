@@ -21,21 +21,27 @@
 DEVICE_PATH := device/tecno/le7n
 
 # Switch off some options for volume reduction
-FOX_VANILLA_BUILD := 1			# Minimal build
-# FOX_EXCLUDE_ALL_LANGUAGES := 1	# If you want to exclude all languages except English
-FOX_LANGUAGES := "en;ru"		# English and Russian languages in Recovery
-FOX_EXCLUDE_THEMES := 1			# Exclude all interface themes
-FOX_EXCLUDE_MAGISK_MANAGER := 1	# Exclude Magisk Manager
-FOX_EXCLUDE_AROMAFM := 1		# Exclude excess file manager
-FOX_EXCLUDE_NANO := 1           # Вырезаем текстовый редактор
-FOX_EXCLUDE_BASH := 1           # Используем стандартный sh вместо тяжелого bash
+FOX_DRASTIC_SIZE_REDUCTION := 1		# Extremal cut out all suprplus code
+FOX_VANILLA_BUILD := 1				# Minimal build
+FOX_EXCLUDE_ALL_LANGUAGES := 1		# If you want to exclude all languages except English
+# FOX_LANGUAGES := "en;ru"			# English and Russian languages in Recovery
+FOX_EXCLUDE_THEMES := 1				# Exclude all interface themes
+FOX_EXCLUDE_MAGISK_MANAGER := 1		# Exclude Magisk Manager
+FOX_EXCLUDE_AROMAFM := 1			# Exclude excess file manager
+FOX_EXCLUDE_NANO := 1           	# Exclude text editor
+FOX_EXCLUDE_BASH := 1           	# Use standard sh instead of heavyweight bash
+FOX_REMOVE_AAPT := 1				# Exclude AAPT (Android Asset Packaging Tool)
+FOX_EXCLUDE_TAR := 1            	# Exclude tar archiver
+FOX_EXCLUDE_SED := 1            	# Exclude SED editor
 
 # Reduce image size
+FOX_USE_LZ4_RAMDISK := 1
 BOARD_RAMDISK_COMPRESSION := lz4
 BOARD_RAMDISK_USE_LZ4 := true
 BOARD_RAMDISK_USE_GZIP := false
-FOX_REMOVE_AAPT := 1
 TW_EXCLUDE_PYTHON := true
+BUILD_BROKEN_DUP_RULES := true
+TW_NO_REBOOT_BOOTLOADER := true
 
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
