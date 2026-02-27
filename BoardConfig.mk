@@ -23,6 +23,13 @@ DEVICE_PATH := device/tecno/le7n
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
 
+# Reduce image size
+BOARD_RAMDISK_USE_LZ4 := true
+BOARD_RAMDISK_USE_GZIP := false
+FOX_VANILLA_BUILD := 1
+FOX_REMOVE_AAPT := 1
+TW_EXCLUDE_PYTHON := true
+
 # Architecture
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
@@ -49,7 +56,7 @@ TW_OEM_BUILD := false
 TW_DEVICE_VERSION := by-@artemscine
 
 # Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := TECNO_LE7n
+TARGET_BOOTLOADER_BOARD_NAME := tecno_le7n
 TARGET_NO_BOOTLOADER := true
 
 # Platform
@@ -61,7 +68,7 @@ BOARD_USES_MTK_HARDWARE := true
 BOARD_HAS_MTK_HARDWARE := true
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := TECNO_LE7n
+TARGET_OTA_ASSERT_DEVICE := tecno_le7n
 
 # Kernel
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
