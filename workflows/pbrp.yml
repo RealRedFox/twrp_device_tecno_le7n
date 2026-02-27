@@ -1,1 +1,15 @@
-
+      - name: Initialize PBRP Manifest
+        run: |
+          mkdir work
+          cd work
+          # Инициализируем базу
+          repo init -u https://github.com -b android-12.1 --depth=1
+          # Подкладываем твой кастомный манифест
+          mkdir -p .repo/local_manifests
+          cp ../pbrp-default.xml .repo/local_manifests/pbrp-default.xml
+          
+      - name: Repo Sync
+        run: |
+          cd work
+          # Синхронизация с учетом локального манифеста
+          repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --no-tags --optimized-fetch --prune
