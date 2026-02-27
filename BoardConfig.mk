@@ -20,15 +20,24 @@
 
 DEVICE_PATH := device/tecno/le7n
 
-# For building with minimal manifest
-ALLOW_MISSING_DEPENDENCIES := true
+# Switch off some options for volume reduction
+FOX_VANILLA_BUILD := 1
+FOX_EXCLUDE_ALL_LANGUAGES := 1
+FOX_LANGUAGES := "en;ru"
+FOX_EXCLUDE_THEMES := 1
+FOX_EXCLUDE_MAGISK_MANAGER := 1
+FOX_EXCLUDE_AROMAFM := 1
 
 # Reduce image size
+BOARD_RAMDISK_COMPRESSION := lz4
 BOARD_RAMDISK_USE_LZ4 := true
 BOARD_RAMDISK_USE_GZIP := false
 FOX_VANILLA_BUILD := 1
 FOX_REMOVE_AAPT := 1
 TW_EXCLUDE_PYTHON := true
+
+# For building with minimal manifest
+ALLOW_MISSING_DEPENDENCIES := true
 
 # Architecture
 TARGET_ARCH := arm64
