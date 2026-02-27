@@ -2,9 +2,9 @@
         run: |
           mkdir work
           cd work
-          # Инициализируем базу
-          repo init -u https://github.com -b android-12.1 --depth=1
-          # Подкладываем твой кастомный манифест
+          # Инициализируем ОРИГИНАЛЬНУЮ базу PBRP
+          repo init -u https://github.com/PitchBlackRecoveryProject/manifest_pb -b android-12.1 --depth=1
+          # 2. Создаем папку для твоего кастомного манифеста
           mkdir -p .repo/local_manifests
           cp ../pbrp-default.xml .repo/local_manifests/pbrp-default.xml
           
