@@ -17,4 +17,6 @@
 PRODUCT_MAKEFILES := \
      $(LOCAL_DIR)/twrp_tecno_le7n.mk
 
-COMMON_LUNCH_CHOICES := twrp_tecno_le7n-eng
+COMMON_LUNCH_CHOICES := \
+    pb_tecno_le7n-eng \
+    pb_tecno_le7n-userdebug
