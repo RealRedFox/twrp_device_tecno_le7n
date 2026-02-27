@@ -13,6 +13,12 @@
           cd work
           # Синхронизация с учетом локального манифеста
           repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune
+
+      - name: Clone Device Tree
+        run: |
+          cd work
+          git clone ${{ github.server_url }}/${{ github.repository }} -b main device/tecno/le7n
+
       - name: Building PBRP
         run: |
           cd work
