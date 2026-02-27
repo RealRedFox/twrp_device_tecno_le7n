@@ -23,6 +23,8 @@ DEVICE_PATH := device/tecno/le7n
 # Switch off some options for volume reduction
 FOX_DRASTIC_SIZE_REDUCTION := 1		# Extremal cut out all suprplus code
 TW_RECOVERY_GUI := false			# Exclude GUI
+DEVICE_SCREEN_WIDTH := 1080			# For use without GUI
+DEVICE_SCREEN_HEIGHT := 2460		# For use without GUI
 FOX_VANILLA_BUILD := 1				# Minimal build
 FOX_EXCLUDE_ALL_LANGUAGES := 1		# If you want to exclude all languages except English
 # FOX_LANGUAGES := "en;ru"			# English and Russian languages in Recovery
@@ -36,12 +38,12 @@ FOX_EXCLUDE_TAR := 1            	# Exclude tar archiver
 FOX_EXCLUDE_SED := 1            	# Exclude SED editor
 
 # Reduce image size
-FOX_USE_LZ4_RAMDISK := 1
+FOX_USE_LZ4_RAMDISK := 0
 # Сжатие - на этом этапе переходим на GZIP (оно плотнее, чем LZ4)
 # Если загрузка будет долгой - не страшно, нам важен размер.
 BOARD_RAMDISK_COMPRESSION := gzip
-BOARD_RAMDISK_USE_LZ4 := true
-BOARD_RAMDISK_USE_GZIP := false
+BOARD_RAMDISK_USE_LZ4 := false
+BOARD_RAMDISK_USE_GZIP := true
 BUILD_BROKEN_DUP_RULES := true
 TW_EXCLUDE_PYTHON := true
 TW_NO_REBOOT_BOOTLOADER := true
