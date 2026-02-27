@@ -13,3 +13,9 @@
           cd work
           # Синхронизация с учетом локального манифеста
           repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune
+      - name: Building PBRP
+        run: |
+          cd work
+          . build/envsetup.sh
+          lunch pb_tecno_le7n-eng            # ЗАПУСК
+          mka pbrp -j$(nproc --all)
