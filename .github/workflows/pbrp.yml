@@ -29,11 +29,9 @@ jobs:
           git config --global user.name "SilverFox"
           git config --global user.email "silver@fox.com"
           git config --global color.ui false
-          # 3. Инициализация с флагом --no-pager (критично!)
+          # 3. Инициализация
           echo "Starting repo init..."
-          repo init --no-pager --no-clone-bundle --depth=1 \
-          -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git \
-          -b pb-12.1
+          repo init --no-clone-bundle --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b pb-12.1
           # 4. Локальный манифест
           echo "Setting up local manifest..."
           mkdir -p .repo/local_manifests
