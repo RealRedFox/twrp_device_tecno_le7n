@@ -22,32 +22,37 @@ jobs:
 
       - name: Initialize PBRP Manifest
         run: |
-          mkdir -p work
-          # Кладём файл и в корень .repo, и в папку manifests
-          touch .repo/remove-minimal.xml
-          touch .repo/manifests/remove-minimal.xml
-          # На всякий случай проверяем, что они создались (увидим в логах)
-          ls -R .repo/remove-minimal.xml .repo/manifests/remove-minimal.xml
-          cd work
+          mkdir -p work # Создаем рабочую папку...
+          echo "Make working folder..."
+          cd work # ...заходим в рабочую папку!
+          echo "Change location to working folder..."
           # 1. Настраиваем Git максимально жестко, чтобы не было вопросов
           git config --global user.name "SilverFox"
           git config --global user.email "silver@fox.com"
           git config --global color.ui false
+          echo "Configuring GIT for futher processing..."
 
-          # 2. Инициализация
+          # 2. Инициализация (создает папку .repo внутри work). На все запросы ОС автоматически дается ответ "yes".
           echo "Starting repo init..."
           yes | repo init --no-clone-bundle --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-12.1 --quiet
 
-          # 3. Локальный манифест
+          # 3. Теперь, когда .repo существует, закидываем туда костыли
+          echo "Applying fixes..."
+          mkdir -p .repo/manifests
+          touch .repo/remove-minimal.xml
+          touch .repo/manifests/remove-minimal.xml
+
+          # 4. Локальный манифест устройства
           echo "Setting up local manifest..."
           mkdir -p .repo/local_manifests
           cp ../pbrp-default.xml .repo/local_manifests/pbrp-default.xml
+          ls -R .repo/remove-minimal.xml .repo/manifests/remove-minimal.xml # На всякий случай проверяем, что они создались (увидим в логах)
+          # Сообщение о завершении инициализации
           echo "Initialization complete!"
-          
+
       - name: Repo Sync
         run: |
           cd work
-          # touch work/.repo/manifests/remove-minimal.xml
           repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 
       - name: Clone Device Tree
