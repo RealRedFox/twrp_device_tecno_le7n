@@ -22,17 +22,18 @@ jobs:
 
       - name: Initialize PBRP Manifest
         run: |
-          # 1. Форсируем создание папки
-          mkdir -pv work
+          mkdir -p work
           cd work
-          # 2. Настраиваем Git максимально жестко, чтобы не было вопросов
+          # 1. Настраиваем Git максимально жестко, чтобы не было вопросов
           git config --global user.name "SilverFox"
           git config --global user.email "silver@fox.com"
           git config --global color.ui false
-          # 3. Инициализация
+
+          # 2. Инициализация
           echo "Starting repo init..."
-          repo init --no-clone-bundle --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-12.1
-          # 4. Локальный манифест
+          repo init --no-clone-bundle --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-12.1 --quiet
+
+          # 3. Локальный манифест
           echo "Setting up local manifest..."
           mkdir -p .repo/local_manifests
           cp ../pbrp-default.xml .repo/local_manifests/pbrp-default.xml
