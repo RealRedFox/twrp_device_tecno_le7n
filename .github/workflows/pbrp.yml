@@ -24,7 +24,9 @@ jobs:
         run: |
           mkdir work
           cd work
-          repo init -u https://github.com -b android-12.1 --depth=1
+          git config --global user.name "SilverFox"
+          git config --global user.email "silver@fox.com"
+          repo init -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-12.1 --depth=1
           mkdir -p .repo/local_manifests
           cp ../pbrp-default.xml .repo/local_manifests/pbrp-default.xml
           
