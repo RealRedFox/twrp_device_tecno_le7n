@@ -34,7 +34,7 @@ jobs:
 
           # 2. Инициализация (создает папку .repo внутри work). На все запросы ОС автоматически дается ответ "yes".
           echo "Starting repo init..."
-          yes | repo init --no-clone-bundle --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-12.1 --quiet
+          yes | repo init --no-clone-bundle --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-12.1
 
           # 3. Теперь, когда .repo существует, закидываем туда костыли
           echo "Applying fixes..."
