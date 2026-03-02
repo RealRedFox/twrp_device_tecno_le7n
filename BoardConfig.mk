@@ -20,46 +20,9 @@
 
 DEVICE_PATH := device/tecno/le7n
 
-# Switch off some options for volume reduction
-FOX_DRASTIC_SIZE_REDUCTION := 1		# Extremal cut out all suprplus code
-TW_RECOVERY_GUI := false			# Exclude GUI
-DEVICE_SCREEN_WIDTH := 1080			# For use without GUI
-DEVICE_SCREEN_HEIGHT := 2460		# For use without GUI
-FOX_VANILLA_BUILD := 1				# Minimal build
-FOX_EXCLUDE_ALL_LANGUAGES := 1		# If you want to exclude all languages except English
-# FOX_LANGUAGES := "en;ru"			# English and Russian languages in Recovery
-FOX_EXCLUDE_THEMES := 1				# Exclude all interface themes
-FOX_EXCLUDE_MAGISK_MANAGER := 1		# Exclude Magisk Manager
-FOX_EXCLUDE_AROMAFM := 1			# Exclude excess file manager
-FOX_EXCLUDE_NANO := 1           	# Exclude text editor
-FOX_EXCLUDE_BASH := 1           	# Use standard sh instead of heavyweight bash
-FOX_REMOVE_AAPT := 1				# Exclude AAPT (Android Asset Packaging Tool)
-FOX_EXCLUDE_TAR := 1            	# Exclude tar archiver
-FOX_EXCLUDE_SED := 1            	# Exclude SED editor
-
-# Reduce image size
-FOX_USE_LZ4_RAMDISK := 0
-# Сжатие - на этом этапе переходим на GZIP (оно плотнее, чем LZ4)
-# Если загрузка будет долгой - не страшно, нам важен размер.
-BOARD_RAMDISK_COMPRESSION := gzip
-BOARD_RAMDISK_USE_LZ4 := false
-BOARD_RAMDISK_USE_GZIP := true
-BUILD_BROKEN_DUP_RULES := true
-TW_EXCLUDE_PYTHON := true
-TW_NO_REBOOT_BOOTLOADER := true
-TW_EXCLUDE_LVM_TOOLS := true
-TW_EXCLUDE_FUSE_EXFAT := true
-TW_EXCLUDE_FUSE_NTFS := true
-# Обход ошибки 76% (HIDL Graphics)
-# Так как GUI=false, библиотеки аллокатора графики не должны тянуться
-TW_EXCLUDE_HIDL := true
-# Дополнительная диета
-TW_EXCLUDE_DEFAULT_USB_INIT := false
-TW_EXTRA_LANGUAGES := false
-TW_INCLUDE_FB2PNG := false
-
 # For building with minimal manifest
 ALLOW_MISSING_DEPENDENCIES := true
+BUILD_BROKEN_DUP_RULES := true
 
 # Architecture
 TARGET_ARCH := arm64
@@ -79,31 +42,17 @@ TARGET_2ND_CPU_VARIANT_RUNTIME := cortex-a53
 TARGET_BOARD_SUFFIX := _64
 TARGET_USES_64_BIT_BINDER := true
 
-# Reduce Size
-TW_EXTRA_LANGUAGES := false
-TW_OEM_BUILD := false
-
-# Copyright
-TW_DEVICE_VERSION := by-@artemscine
-
-# Bootloader
-TARGET_BOOTLOADER_BOARD_NAME := tecno_le7n
-TARGET_NO_BOOTLOADER := true
-
 # Platform
 TARGET_BOARD_PLATFORM := mt6768
 TARGET_USES_UEFI := true
-
-# These two are for MTK Chipsets only
 BOARD_USES_MTK_HARDWARE := true
 BOARD_HAS_MTK_HARDWARE := true
-
-# Assert
+TARGET_BOOTLOADER_BOARD_NAME := tecno_le7n
+TARGET_NO_BOOTLOADER := true
 TARGET_OTA_ASSERT_DEVICE := tecno_le7n
 
 # Kernel
 BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2
-BOARD_NAME := 
 BOARD_KERNEL_IMAGE_NAME := kernel
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_BOOT_HEADER_VERSION := 2
@@ -117,6 +66,8 @@ TARGET_PREBUILT_KERNEL := $(DEVICE_PATH)/prebuilt/kernel
 TARGET_PREBUILT_DTB := $(DEVICE_PATH)/prebuilt/dtb
 TARGET_KERNEL_ARCH := arm64
 BOARD_INCLUDE__DTB_IN_BOOTIMG := true
+
+# Boot Image Arguments
 BOARD_MKBOOTIMG_ARGS += --base $(BOARD_KERNEL_BASE)
 BOARD_MKBOOTIMG_ARGS += --pagesize $(BOARD_KERNEL_PAGESIZE)
 BOARD_MKBOOTIMG_ARGS += --ramdisk_offset $(BOARD_RAMDISK_OFFSET)
@@ -127,108 +78,64 @@ BOARD_MKBOOTIMG_ARGS += --dtb_offset $(BOARD_DTB_OFFSET)
 BOARD_MKBOOTIMG_ARGS += --header_version $(BOARD_BOOT_HEADER_VERSION)
 BOARD_MKBOOTIMG_ARGS += --dtb $(TARGET_PREBUILT_DTB)
 
-# AB
-AB_OTA_UPDATER := true
-
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 33554432
-#BOARD_RECOVERYIMAGE_PARTITION_SIZE := 33554432
-BOARD_USERDATAIMAGE_FILE_SYSTEM_TYPE := f2fs
-BOARD_SYSTEMIMAGE_PARTITION_TYPE := ext4
-BOARD_SYSTEMIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_VENDORIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_PRODUCTIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_SYSTEM_EXTIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_FLASH_BLOCK_SIZE := 131072 # (BOARD_KERNEL_PAGESIZE * 64)
-
+BOARD_FLASH_BLOCK_SIZE := 131072
 BOARD_USES_METADATA_PARTITION := true
+BOARD_ROOT_EXTRA_FOLDERS += metadata tranfs
 
-# File systems
-TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_USE_F2FS := true
-
-# Dynamic Partition
+# AB & Dynamic Partitions
+AB_OTA_UPDATER := true
 BOARD_SUPER_PARTITION_SIZE := 7516192768
 BOARD_SUPER_PARTITION_GROUPS := tecno_dynamic_partitions
 BOARD_TECNO_DYNAMIC_PARTITIONS_SIZE := 7516192768
-BOARD_TECNO_DYNAMIC_PARTITIONS_PARTITION_LIST := \
-	system \
-	system_ext \
-	vendor \
-	product
+BOARD_TECNO_DYNAMIC_PARTITIONS_PARTITION_LIST := system system_ext vendor product
 
-
-# Workaround for error copying vendor files to recovery ramdisk
-TARGET_COPY_OUT_VENDOR := vendor
-TARGET_COPY_OUT_PRODUCT := product
-TARGET_COPY_OUT_SYSTEM_EXT := system_ext
-BOARD_SUPPRESS_SECURE_ERASE := true
-
-# Filesystem
-BOARD_ROOT_EXTRA_FOLDERS += metadata tranfs
-
-# Properties
-TARGET_SYSTEM_PROP += $(DEVICE_PATH)/system.prop
-
-# Recovery
+# Recovery Strategy
 BOARD_USES_RECOVERY_AS_BOOT := true
 TARGET_NO_RECOVERY := true
+
+# PBRP / TWRP GUI & Optimization
+TW_RECOVERY_GUI := true
+# PBRP требует GUI для работы своих скриптов, но мы максимально его сожмем
+TW_FRAMEBUFFER_DEFAULT_FORMAT := "RGBA_8888"
+DEVICE_SCREEN_WIDTH := 1080
+DEVICE_SCREEN_HEIGHT := 2460
 TW_THEME := portrait_hdpi
-TARGET_RECOVERY_PIXEL_FORMAT := "BGRA_8888"
 
-# Additional binaries & libraries needed for recovery
-TARGET_RECOVERY_DEVICE_MODULES += \
-    libkeymaster4 \
-    libpuresoftkeymasterdevice
-
-# TWRP specific build flags
-TW_DEFAULT_LANGUAGE := en
-RECOVERY_SDCARD_ON_DATA := true
-TW_SCREEN_BLANK_ON_BOOT := true
-BOARD_HAS_LARGE_FILESYSTEM := true
-TW_HAS_MTP := true
-TW_INCLUDE_NTFS_3G := true
-TW_USE_TOOLBOX := true
-TW_EXCLUDE_DEFAULT_USB_INIT := true
-TW_INCLUDE_REPACKTOOLS := true
-TARGET_USES_MKE2FS := true
+# Drastic Size Reduction for PBRP
+TW_EXCLUDE_PYTHON := true
+TW_EXCLUDE_LVM_TOOLS := true
+TW_EXCLUDE_FUSE_EXFAT := true
+TW_EXCLUDE_FUSE_NTFS := true
+TW_INCLUDE_NTFS_3G := false
+TW_INCLUDE_REPACKTOOLS := false
 TW_NO_TWRPAPP := true
-TWRP_INCLUDE_LOGCAT := true
-TW_NO_SCREEN_TIMEOUT := true
-TARGET_USES_LOGD := true
-TARGET_USE_CUSTOM_LUN_FILE_PATH := /config/usb_gadget/g1/functions/mass_storage.0/lun.%d/file
-TW_SCREEN_BLANK_ON_BOOT := true
-TW_BRIGHTNESS_PATH := "/sys/class/leds/lcd-backlight/brightness"
-TW_MAX_BRIGHTNESS := 2047
-TW_DEFAULT_BRIGHTNESS := 1200
-TW_INPUT_BLACKLIST := "hbtp_vm"
-TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
-TW_RECOVERY_ADDITIONAL_RELINK_LIBRARY_FILES += \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libkeymaster4.so \
-    $(TARGET_OUT_SHARED_LIBRARIES)/libpuresoftkeymasterdevice.so
+TWRP_INCLUDE_LOGCAT := false
+TW_EXTRA_LANGUAGES := false
+TW_DEFAULT_LANGUAGE := en
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_FBE_METADATA_DECRYPT := true
 
-# AVB - Android Verified Boot
+# Compression (CRITICAL for 32MB)
+BOARD_RAMDISK_COMPRESSION := lzma
+$(call inherit-product, build/make/target/product/generic_ramdisk.mk)
+
+# HIDL & Graphics workaround
+TW_EXCLUDE_HIDL := true
+
+# PitchBlack Specific
+PB_DISABLE_DEFAULT_TREES := true
+PB_VANILLA_BUILD := true
+
+# Security Patch Level
+PLATFORM_SECURITY_PATCH := 2099-12-31
+VENDOR_SECURITY_PATCH := 2099-12-31
+PLATFORM_VERSION := 16.0.0
+
+# AVB
 BOARD_AVB_ENABLE := true
-BOARD_AVB_VBMETA_SYSTEM := system product
-BOARD_AVB_VBMETA_SYSTEM_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
-BOARD_AVB_VBMETA_SYSTEM_ALGORITHM := SHA256_RSA2048
-BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
-BOARD_AVB_VBMETA_SYSTEM_ROLLBACK_INDEX_LOCATION := 1
-BOARD_AVB_VBMETA_VENDOR := vendor
-BOARD_AVB_VBMETA_VENDOR_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
-BOARD_AVB_VBMETA_VENDOR_ALGORITHM := SHA256_RSA2048
-BOARD_AVB_VBMETA_VENDOR_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
-BOARD_AVB_VBMETA_VENDOR_ROLLBACK_INDEX_LOCATION := 2
 BOARD_AVB_RECOVERY_KEY_PATH := external/avb/test/data/testkey_rsa2048.pem
 BOARD_AVB_RECOVERY_ALGORITHM := SHA256_RSA2048
 BOARD_AVB_RECOVERY_ROLLBACK_INDEX := $(PLATFORM_SECURITY_PATCH_TIMESTAMP)
 BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 3
-
-# Crypto
-PLATFORM_SECURITY_PATCH := 2099-12-31
-VENDOR_SECURITY_PATCH := 2099-12-31
-PLATFORM_VERSION := 16.0.0
-PLATFORM_VERSION_LAST_STABLE := $(PLATFORM_VERSION)
-TW_INCLUDE_CRYPTO := true
-TW_INCLUDE_FBE_METADATA_DECRYPT := true
-
