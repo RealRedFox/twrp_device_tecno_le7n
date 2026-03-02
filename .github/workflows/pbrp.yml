@@ -31,7 +31,7 @@ jobs:
 
           # 2. Инициализация
           echo "Starting repo init..."
-          repo init --no-clone-bundle --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-12.1 --quiet
+          yes | repo init --no-clone-bundle --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-12.1 --quiet
 
           # 3. Локальный манифест
           echo "Setting up local manifest..."
