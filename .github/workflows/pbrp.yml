@@ -17,10 +17,8 @@ jobs:
 
       - name: Install Repo Tool
         run: |
-          mkdir -p ~/bin
-          curl -n -L https://storage.googleapis.com > ~/bin/repo # Флаг -n отключает чтение .netrc, чтобы не передавать лишние токены
-          chmod a+x ~/bin/repo
-          sudo cp ~/bin/repo /usr/bin/repo
+          sudo apt-get update
+          sudo apt-get install repo -y
 
       - name: Initialize PBRP Manifest
         run: |
