@@ -23,6 +23,11 @@ jobs:
       - name: Initialize PBRP Manifest
         run: |
           mkdir -p work
+          # Кладём файл и в корень .repo, и в папку manifests
+          touch .repo/remove-minimal.xml
+          touch .repo/manifests/remove-minimal.xml
+          # На всякий случай проверяем, что они создались (увидим в логах)
+          ls -R .repo/remove-minimal.xml .repo/manifests/remove-minimal.xml
           cd work
           # 1. Настраиваем Git максимально жестко, чтобы не было вопросов
           git config --global user.name "SilverFox"
