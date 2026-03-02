@@ -41,7 +41,8 @@ jobs:
       - name: Repo Sync
         run: |
           cd work
-          repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags --optimized-fetch --prune
+          touch work/.repo/manifests/remove-minimal.xml
+          repo sync -c -j$(nproc --all) --force-sync --no-clone-bundle --no-tags
 
       - name: Clone Device Tree
         run: |
