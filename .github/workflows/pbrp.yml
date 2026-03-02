@@ -22,15 +22,23 @@ jobs:
 
       - name: Initialize PBRP Manifest
         run: |
-          mkdir -p work
+          # 1. Форсируем создание папки
+          mkdir -pv work
           cd work
+          # 2. Настраиваем Git максимально жестко, чтобы не было вопросов
           git config --global user.name "SilverFox"
           git config --global user.email "silver@fox.com"
-          # Добавляем --no-clone-bundle и --no-tags для ускорения, 
-          # и ГЛАВНОЕ: исправляем ветку на pb-12.1
-          repo init --no-clone-bundle --no-tags -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b pb-12.1 --depth=1
+          git config --global color.ui false
+          # 3. Инициализация с флагом --no-pager (критично!)
+          echo "Starting repo init..."
+          repo init --no-pager --no-clone-bundle --depth=1 \
+          -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git \
+          -b pb-12.1
+          # 4. Локальный манифест
+          echo "Setting up local manifest..."
           mkdir -p .repo/local_manifests
           cp ../pbrp-default.xml .repo/local_manifests/pbrp-default.xml
+          echo "Initialization complete!"
           
       - name: Repo Sync
         run: |
