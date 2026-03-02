@@ -17,10 +17,10 @@ jobs:
 
       - name: Install Repo Tool
         run: |
-          mkdir ~/bin
-          curl https://storage.googleapis.com > ~/bin/repo
+          mkdir -p ~/bin
+          curl -L https://storage.googleapis.com > ~/bin/repo
           chmod a+x ~/bin/repo
-          sudo ln -sf ~/bin/repo /usr/bin/repo
+          sudo cp ~/bin/repo /usr/bin/repo
 
       - name: Initialize PBRP Manifest
         run: |
