@@ -18,7 +18,7 @@ jobs:
       - name: Install Repo Tool
         run: |
           mkdir -p ~/bin
-          curl -L https://storage.googleapis.com > ~/bin/repo
+          curl -n -L https://storage.googleapis.com > ~/bin/repo # Флаг -n отключает чтение .netrc, чтобы не передавать лишние токены
           chmod a+x ~/bin/repo
           sudo cp ~/bin/repo /usr/bin/repo
 
