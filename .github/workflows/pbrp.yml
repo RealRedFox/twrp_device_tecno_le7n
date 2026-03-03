@@ -22,20 +22,23 @@ jobs:
 
       - name: Initialize PBRP Manifest
         run: |
+          mkdir -p work # Создаем рабочую папку...
+          echo "Make working folder..."
+
           # 0. Качаем repo из проверенного репозитория Akhil Narang
-          curl https://raw.githubusercontent.com/akhilnarang/scripts/master/repo > repo
+          curl -s https://raw.githubusercontent.com/akhilnarang/scripts/master/repo > repo
           chmod a+x repo
           export PATH=$PWD:$PATH # Добавляем локальный repo в путь
 
           # 1. Настраиваем Git максимально жестко, чтобы не было вопросов и создаем рабочую папку
-          mkdir -p work # Создаем рабочую папку...
+          cd work # ...заходим в рабочую папку!
+          echo "Change location to working folder..."
           git config --global user.name "SilverFox"
           git config --global user.email "silver@fox.com"
           git config --global color.ui false
           echo "Configuring GIT for futher processing..."
-          echo "Make working folder..."
-          cd work # ...заходим в рабочую папку!
-          echo "Change location to working folder..."
+
+
           
           # 2. Инициализация (создает папку .repo внутри work). На все запросы ОС автоматически дается ответ "yes".
           echo "Starting repo init..."
@@ -54,7 +57,7 @@ jobs:
           ls -R .repo/remove-minimal.xml .repo/manifests/remove-minimal.xml # На всякий случай проверяем, что они создались (увидим в логах)
           # Сообщение о завершении инициализации
           echo "Initialization complete!"
- 
+
       - name: Repo Sync
         run: |
           cd work
