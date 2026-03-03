@@ -22,24 +22,24 @@ jobs:
 
       - name: Initialize PBRP Manifest
         run: |
-          # 0. Скачиваем свежий repo бинарник, чтобы не зависеть от системного
-          curl https://storage.googleapis.com > repo
+          # 0. Качаем repo из проверенного репозитория Akhil Narang
+          curl https://raw.githubusercontent.com/akhilnarang/scripts/master/repo > repo
           chmod a+x repo
           export PATH=$PWD:$PATH # Добавляем локальный repo в путь
 
           # 1. Настраиваем Git максимально жестко, чтобы не было вопросов и создаем рабочую папку
+          mkdir -p work # Создаем рабочую папку...
           git config --global user.name "SilverFox"
           git config --global user.email "silver@fox.com"
           git config --global color.ui false
           echo "Configuring GIT for futher processing..."
-          mkdir -p work # Создаем рабочую папку...
           echo "Make working folder..."
           cd work # ...заходим в рабочую папку!
           echo "Change location to working folder..."
           
           # 2. Инициализация (создает папку .repo внутри work). На все запросы ОС автоматически дается ответ "yes".
           echo "Starting repo init..."
-          yes | repo init --no-clone-bundle --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-12.1
+          yes | ../repo init --no-clone-bundle --depth=1 -u https://github.com/PitchBlackRecoveryProject/manifest_pb.git -b android-12.1
 
           # 3. Теперь, когда .repo существует, закидываем туда костыли
           echo "Applying fixes..."
@@ -54,7 +54,7 @@ jobs:
           ls -R .repo/remove-minimal.xml .repo/manifests/remove-minimal.xml # На всякий случай проверяем, что они создались (увидим в логах)
           # Сообщение о завершении инициализации
           echo "Initialization complete!"
-
+ 
       - name: Repo Sync
         run: |
           cd work
